@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace InputReceiver_Interface
+{
+    public interface IInputReceiver
+    {
+        void DoMoveDir(Vector2 aDir); //for movement controls
+        void DoLeftAction(); //left option
+        void DoRightAction(); //right option
+        void DoSubmitAction(); //space option
+        void DoCancelAction(); //esc option
+    }
+
+}
