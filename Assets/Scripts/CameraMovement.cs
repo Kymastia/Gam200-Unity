@@ -5,10 +5,14 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform target;
+    public RaycastPlayerCamera raycastPlayerCamera;
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        Vector3 newPosition = new Vector3(target.position.x, transform.position.y, transform.position.z);
-        transform.position = newPosition;
+        if (!raycastPlayerCamera.isTouchingBoundary)
+        {
+            Vector3 newPosition = new Vector3(target.position.x, transform.position.y, transform.position.z);
+            transform.position = newPosition;
+        }
     }
 }
