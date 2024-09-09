@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 public class PlayerMovement : MonoBehaviour
 {
+    //some things to think about, if the player is in the air how slow should their movement be?
     [Header("Logic")]
     [SerializeField] private Animator anim;
     private CharacterController controller;
-    //For going down 
-    private Vector3 slopeNormal;
+
     //Check if the player is grounded
     private bool grounded;
     private float verticalVelocity;
@@ -28,12 +29,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float terminalVelocity = 5.0f;
     public Rigidbody rb;
 
-    [Header("GroundCheckRayCast")]
-    //Determines how the ground is being checked
-    [SerializeField] private float extremitiesOffset = 0.05f;
-    [SerializeField] private float innerVerticalOffset = 0.25f;
-    [SerializeField] private float distanceGrounded = 0.15f;
-    [SerializeField] private float slopeThreshold = 0.55f;
+    public BoundaryDetectorPlayer boundaryDetectorPlayer;
+
 
     private void Awake()
     {
@@ -51,8 +48,28 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 PoolInput()
     {
         Vector3 r = default(Vector3);
+
         r.x = Input.GetAxisRaw("Horizontal");
         r.z = Input.GetAxisRaw("Vertical");
+        if (r.x < 0 && !boundaryDetectorPlayer.canMoveLeft) 
+        {
+            r.x = 0;
+        }
+        if (r.x > 0 && !boundaryDetectorPlayer.canMoveRight) 
+        {
+            r.x = 0;
+        }
+
+        //Positive means going back
+        if (r.z < 0 && !boundaryDetectorPlayer.canMoveFront)
+        {
+            r.z = 0;
+        }
+        if (r.z > 0 && !boundaryDetectorPlayer.canMoveBack)
+        {
+            r.z = 0;
+        }
+
         return r.normalized;
     }
 
@@ -71,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         if (verticalVelocity < 0)
             return false;
         else return true;
+
         /*
         float yRay = (controller.bounds.center.y - (controller.height) * 0.5f) + innerVerticalOffset;
         RaycastHit hit;
@@ -78,6 +96,5 @@ public class PlayerMovement : MonoBehaviour
             Vector3 movement = new Vector3(moveX, 0, moveZ) * moveSpeed * Time.deltaTime;
     transform.Translate(movement);
         */
-
     }
 }
