@@ -53,20 +53,25 @@ public class PlayerMovement : MonoBehaviour
         r.z = Input.GetAxisRaw("Vertical");
         if (r.x < 0 && !boundaryDetectorPlayer.canMoveLeft) 
         {
+            Debug.Log("Left");
             r.x = 0;
         }
         if (r.x > 0 && !boundaryDetectorPlayer.canMoveRight) 
         {
+            Debug.Log("Right");
             r.x = 0;
         }
 
         //Positive means going back
+        //If trying to move back and canMoveFront is false
         if (r.z < 0 && !boundaryDetectorPlayer.canMoveFront)
         {
+            Debug.Log("Front");
             r.z = 0;
         }
         if (r.z > 0 && !boundaryDetectorPlayer.canMoveBack)
         {
+            Debug.Log("Back");
             r.z = 0;
         }
 

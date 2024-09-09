@@ -55,27 +55,27 @@ public class BoundaryDetectorPlayer : MonoBehaviour
         }
 
         //Front
-        if (Physics.Raycast(transform.position + frontRaycastOffset, Vector3.forward, frontRaycastLength, boundary))
+        if (Physics.Raycast(transform.position + frontRaycastOffset, Vector3.back, frontRaycastLength, boundary))
         {
             canMoveFront = false;
-            Debug.DrawRay(transform.position + frontRaycastOffset, Vector3.forward * frontRaycastLength, Color.red);
+            Debug.DrawRay(transform.position + frontRaycastOffset, Vector3.back * frontRaycastLength, Color.red);
         }
         else
         {
             canMoveFront = true;
-            Debug.DrawRay(transform.position + frontRaycastOffset, Vector3.forward * frontRaycastLength, Color.green);
+            Debug.DrawRay(transform.position + frontRaycastOffset, Vector3.back * frontRaycastLength, Color.green);
         }
 
         //Back
-        if (Physics.Raycast(transform.position + backRaycastOffset, Vector3.back, backRaycastLength, boundary))
+        if (Physics.Raycast(transform.position + backRaycastOffset, Vector3.forward, backRaycastLength, boundary))
         {
             canMoveBack = false;
-            Debug.DrawRay(transform.position + backRaycastOffset, Vector3.back * backRaycastLength, Color.red);
+            Debug.DrawRay(transform.position + backRaycastOffset, Vector3.forward * backRaycastLength, Color.red);
         }
         else
         {
-            canMoveFront = true;
-            Debug.DrawRay(transform.position + backRaycastOffset, Vector3.back * backRaycastLength, Color.green);
+            canMoveBack = true;
+            Debug.DrawRay(transform.position + backRaycastOffset, Vector3.forward * backRaycastLength, Color.green);
         }
     }
     private void OnDrawGizmos()
@@ -88,9 +88,9 @@ public class BoundaryDetectorPlayer : MonoBehaviour
         Gizmos.DrawRay(transform.position + rightRaycastOffset, Vector3.right * rightRaycastLength);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position + frontRaycastOffset, Vector3.forward * frontRaycastLength);
+        Gizmos.DrawRay(transform.position + frontRaycastOffset, Vector3.back * frontRaycastLength);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position + backRaycastOffset, Vector3.back * backRaycastLength);
+        Gizmos.DrawRay(transform.position + backRaycastOffset, Vector3.forward * backRaycastLength);
     }
 }

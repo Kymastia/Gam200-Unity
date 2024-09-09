@@ -687,12 +687,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftRaycastLength: 1
   rightRaycastLength: 1
-  frontRaycastLength: 1
-  backRaycastLength: 1
-  leftRaycastOffset: {x: 0, y: 0, z: 0.5}
-  rightRaycastOffset: {x: 0, y: 0, z: 0.5}
-  frontRaycastOffset: {x: 0, y: 0, z: 0.5}
-  backRaycastOffset: {x: 0, y: 0, z: 0.5}
+  frontRaycastLength: 1.5
+  backRaycastLength: 1.5
+  leftRaycastOffset: {x: 0, y: 0.5, z: 0.5}
+  rightRaycastOffset: {x: 0, y: 0.5, z: 0.5}
+  frontRaycastOffset: {x: 0, y: 0.5, z: 0.5}
+  backRaycastOffset: {x: 0, y: 0.5, z: 0.5}
   boundary:
     serializedVersion: 2
     m_Bits: 64
