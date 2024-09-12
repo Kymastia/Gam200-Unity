@@ -24,47 +24,55 @@ public class EnemyMovement : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
+        //THe enemy's current position
         Vector3 position = transform.position;
+        //The player position
         Vector3 targetPosition = player.position;
 
-        // Calculate the distance between the enemy and player on the X and Z axes
+        // The distance between the player and the enemy for both axis
         float distanceX = targetPosition.x - position.x;
         float distanceZ = targetPosition.z - position.z;
 
-        // Update the booleans based on whether the enemy is to the left or right of the player
+        // Sets the boolean to true for the enemy being on whatever side, this is for helping 
+        // the enemy sprite decide which way to face, or which sprite to use, yada yada
+        // for the enemy clumping one, probably use some raycast on the player end
         isPlayerToLeft = distanceX > 0;
         isPlayerToRight = distanceX < 0;
 
-        // Phase 1: Move diagonally towards the player (X and Z simultaneously)
+        // Stage 1, If the character is neither aligned nor reached the point, do that
         if (!hasReachedZ || !hasAlignedX)
         {
             float moveX = Mathf.Sign(distanceX) * speed * Time.deltaTime;
             float moveZ = Mathf.Sign(distanceZ) * speed * Time.deltaTime;
 
-            // Move towards player's Z position without any buffer
-            if (Mathf.Abs(distanceZ) > stopDistance)
+            // Align the enemy to the player on Z axis
+            if (Mathf.Abs(distanceZ) > stopDistance && !hasReachedZ)
             {
                 position.z += moveZ;
             }
-            else
+            else if (position.z == targetPosition.z)
             {
-                hasReachedZ = true;  // Mark Z alignment when close enough to the player
+                hasReachedZ = true; //This only gets turned off if the player goes past a threshold
             }
 
-            // Move towards player's X position but stop at a large buffer
+            // Move towards player's X position but stop with a large buffer
+            // Gives the player an idea that the enemy is approaching
             if (Mathf.Abs(distanceX) > largeXBuffer && !hasAlignedX)
             {
                 position.x += moveX;
             }
+
             else if (Mathf.Abs(distanceX) <= largeXBuffer && !hasAlignedX)
             {
-                hasAlignedX = true;  // Mark X alignment when within the large buffer
+                hasAlignedX = true;  // This only gets turned off if the player leaves the threshold
             }
         }
 
-        // Phase 2: Once Z alignment is done, adjust X to close the gap within the small buffer
+        // Stage 2, Now that player aligned and close on X, move closer
+        // Has fulfilled the Z axis, gotten within X distance
         if (hasReachedZ && hasAlignedX && Mathf.Abs(distanceX) > smallXBuffer)
         {
+            // Move horizontally
             float moveX = Mathf.Sign(distanceX) * speed * Time.deltaTime;
             position.x += moveX;
         }
