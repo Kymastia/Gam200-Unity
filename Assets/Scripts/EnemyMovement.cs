@@ -17,9 +17,24 @@ public class EnemyMovement : MonoBehaviour
     public bool isPlayerToLeft { get; private set; }
     public bool isPlayerToRight { get; private set; }
 
+    [SerializeField] SpriteRenderer spriteRenderer;
+
     void Update()
     {
         MoveTowardsPlayer();
+        FlipCharacter();
+    }
+
+    private void FlipCharacter()
+    {
+        if ( isPlayerToRight)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     private void MoveTowardsPlayer()

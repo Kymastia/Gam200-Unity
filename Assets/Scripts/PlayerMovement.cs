@@ -31,6 +31,10 @@ public class PlayerMovement : MonoBehaviour
 
     public BoundaryDetectorPlayer boundaryDetectorPlayer;
 
+    [SerializeField] SpriteRenderer spriteRenderer;
+
+    private bool movingRight;
+    private bool movingLeft;
 
     private void Awake()
     {
@@ -42,9 +46,20 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 inputVector = PoolInput();
         Move(inputVector);
+        FlipCharacter();
 
     }
-
+    private void FlipCharacter()
+    {
+        if (movingRight)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (movingLeft)
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
     private Vector3 PoolInput()
     {
         Vector3 r = default(Vector3);
@@ -83,6 +98,16 @@ public class PlayerMovement : MonoBehaviour
         float moveX = direction.x * speedX * Time.deltaTime;
         float moveZ = direction.z * speedZ * Time.deltaTime;
         Vector3 movement = new Vector3(moveX, 0, moveZ);
+        if (moveX > 0)
+        {
+            movingLeft = true;
+            movingRight = false;
+        }
+        else if (moveX < 0)
+        {
+            movingRight = true;
+            movingLeft = false;
+        }
         rb.MovePosition(rb.position + movement);
     }
 
