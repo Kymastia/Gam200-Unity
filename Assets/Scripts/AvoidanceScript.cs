@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AvoidanceScript : MonoBehaviour
 {
+
+    //The idea is that you probably want behavior tags, idle, active and etc, to tell them what to do
     public float avoidDistance = 2f;  // Distance to check for nearby enemies
     public float avoidStrength = 3f;  // Force with which the enemies push away from each other
     public string enemyTag = "Enemy";  // Tag used to identify other enemies
@@ -30,10 +32,10 @@ public class AvoidanceScript : MonoBehaviour
             // Skip self
             if (otherEnemy == this.gameObject) continue;
 
-            // Calculate distance between this enemy and the other enemy
+            // Calculate distance between them
             float distance = Vector3.Distance(transform.position, otherEnemy.transform.position);
 
-            // If within the avoidance distance, push away from each other
+            // If within the avoidance distance, push away
             if (distance < avoidDistance)
             {
                 Vector3 directionAway = (transform.position - otherEnemy.transform.position).normalized;
