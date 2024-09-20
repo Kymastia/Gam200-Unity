@@ -1,0 +1,3 @@
+﻿ID,enemyName,enemyHealth,enemyAttack,enemySpeed
+1,Normal,10,2,2
+2,Heavy,20,4,2

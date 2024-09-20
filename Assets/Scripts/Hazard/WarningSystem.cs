@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class WarningSystem : MonoBehaviour
 {
-    [SerializeField] public float yOffset = 0f;
-    [SerializeField] private float customScaleX = 1f;
-    [SerializeField] private float customScaleY = 1f;
+    //This should be linked to the camera's X axis.
+    //This should be the warning
 
-    public GameObject BGPrefab;
+    [SerializeField] public float xOffset = 0f;    
+    private GameObject BGPrefab;
     private SpriteRenderer spriteRenderer;
     public float lerpDuration = 3f; 
     public float targetRedValue = 2f;
@@ -17,16 +17,17 @@ public class WarningSystem : MonoBehaviour
 
     private void Start()
     {
-        SpawnBGObject();
+        //Spawn the background, probably spawn a logo
+        //Make it spawn Warning Additional part
+        //SpawnBGObject();
 
     }
     private void Update()
     {
     Camera mainCamera = Camera.main;
     Vector3 newPosition = transform.position;
-    newPosition.y = mainCamera.transform.position.y + yOffset;
+    newPosition.x = mainCamera.transform.position.x + xOffset;
     transform.position = newPosition;
-    transform.localScale = new Vector3(customScaleX, customScaleY, customScaleY);
 
     }
 
@@ -44,7 +45,7 @@ public class WarningSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-       if (other.CompareTag("FlowerPot"))
+       if (other.CompareTag("CannonBall"))
         {
             Destroy(gameObject);
         }

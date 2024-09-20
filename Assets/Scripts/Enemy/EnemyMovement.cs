@@ -20,15 +20,17 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header("State")]
-    public bool isActive = false; // Checks if the player has anyone occupying
+    public bool isActive = true; // Checks if the player has anyone occupying
     public bool idleDirection = false;
 
-    PlayerEnemySideDetection playerEnemySideDetection;
+    [SerializeField] PlayerEnemySideDetection playerEnemySideDetection;
 
     void Update()
     {
-        checkPlayer();
-        if (isActive)
+        MoveTowardsPlayer();
+        FlipCharacter();
+        //checkPlayer();
+        /*if (isActive)
         {
             MoveTowardsPlayer();
             FlipCharacter();
@@ -36,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             Idle();
-        }
+        }*/
 
     }
 
@@ -44,11 +46,11 @@ public class EnemyMovement : MonoBehaviour
     {
         if (playerEnemySideDetection.leftOccupied && playerEnemySideDetection.rightOccupied)
         {
-            isActive = false;
+            isActive = true;
         }
         else
         {
-            isActive = true;
+            isActive = false;
         }
     }
     private void Idle()
@@ -57,21 +59,31 @@ public class EnemyMovement : MonoBehaviour
         int randomDistance;
         if (idleDirection == true)
         {
-            randomDistance = Random.Range(3, 5);
+            randomDistance = Random.Range(1, 2);
             spriteRenderer.flipX = true;
         }
         else
         {
-            randomDistance = Random.Range(-3, -5);
+            randomDistance = Random.Range(-1, -2);
             spriteRenderer.flipX = false;
         }
 
         Vector3 targetPosition = transform.position;
-        targetPosition.x += randomDistance;
+        float enemyMoveX = Mathf.Sign(randomDistance) * speed * Time.deltaTime;
+        position.x += enemyMoveX;
+        transform.position = position;
+    }
 
-
-
-
+    private void CheckIdle()
+    {
+        if (idleDirection)
+        {
+            idleDirection = false;
+        }
+        else
+        {
+            idleDirection = true;
+        }
     }
 
     private void FlipCharacter()

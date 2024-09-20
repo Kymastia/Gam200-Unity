@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class WarningBGSystem : MonoBehaviour
 {
-    [SerializeField] public float yOffset = 0f;
-    [SerializeField] public float fallingYOffset = 0f;
-    [SerializeField] private float customScaleX = 1f;
-    [SerializeField] private float customScaleY = 1f;
-    public GameObject PlantPrefab;
+    //Don't Use
+    [SerializeField] public float xOffset = 0f;
+    public GameObject CannonBall;
     private SpriteRenderer spriteRenderer;
     public float lerpDuration = 3f;
     public float targetValue = 0f;
     private Color initialColor;
 
 
+
     private void Start()
     {
+        //Get the renderer, set the initialColor to the current Color
         spriteRenderer = GetComponent<SpriteRenderer>();
         initialColor = spriteRenderer.color;
+        //Start the coroutine to change the color
         StartCoroutine(LerpColor());
     }
     private void Update()
     {
         Camera mainCamera = Camera.main;
         Vector3 newPosition = transform.position;
-        newPosition.y = mainCamera.transform.position.y + yOffset;
+        newPosition.x = mainCamera.transform.position.x + xOffset;
         transform.position = newPosition;
-        transform.localScale = new Vector3(customScaleX, customScaleY, 1f);
-
     }
 
 
@@ -62,19 +61,19 @@ public class WarningBGSystem : MonoBehaviour
     private void SpawnFallingObject()
     {
 
-        GameObject canvas = Instantiate(PlantPrefab);
+        GameObject cannonBall = Instantiate(CannonBall);
 
         Camera mainCamera = Camera.main;
 
-        Vector3 adjustedPosition = new Vector3(transform.position.x, mainCamera.transform.position.y + fallingYOffset, 0f);
+        //Vector3 adjustedPosition = new Vector3(transform.position.x, mainCamera.transform.position.y + fallingYOffset, 0f);
 
-        canvas.transform.position = adjustedPosition;
+        //cannonBall.transform.position = adjustedPosition;
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("FlowerPot"))
+        if (other.CompareTag("CannonBall"))
         {
             Destroy(gameObject);
         }
