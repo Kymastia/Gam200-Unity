@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingObjectSpawner : MonoBehaviour
+public class CannonBallSpawner : MonoBehaviour
 {
     //Rename this to CannonBallSpawner
     //Throw this object on where ever, but probs the camera
     //Warning Object Prefab, is going to just be an icon in the 3D space, based along the Z and X axis
     //Toss this on the camera
-    public GameObject warningObjectPrefab;
+    [Header("Prefabs")]
+    [SerializeField] public GameObject warningObjectPrefab;
+    [SerializeField] public GameObject cannonBall;
 
+    [Header("Positioning")]
     [SerializeField] float spawnZRange = 4f;
     [SerializeField] float Xoffset;
     [SerializeField] float Zoffset;
@@ -33,8 +36,10 @@ public class FallingObjectSpawner : MonoBehaviour
         //It should be sorta linked to the camera.
         Transform theSpawn = GetRandomSpawnPoint(spawns);
         float randomZOffSet = Random.Range(-spawnZRange, spawnZRange);
-        Vector3 spawnPosition = new Vector3(theSpawn.position.x +9.75f , 0f , theSpawn.position.z + randomZOffSet);
-        Instantiate(warningObjectPrefab, spawnPosition, Quaternion.Euler(20,0,0));
+        Vector3 warningSpawnPosition = new Vector3(theSpawn.position.x +9.75f , 0f , theSpawn.position.z + randomZOffSet);
+        Instantiate(warningObjectPrefab, warningSpawnPosition, Quaternion.Euler(20,0,0));
+        Vector3 cannonBallSpawnPosition = new Vector3(theSpawn.position.x - 10, 0f, theSpawn.position.z + randomZOffSet);
+        Instantiate(cannonBall, cannonBallSpawnPosition, Quaternion.Euler(20, 0, 0));
     }
 
     public Transform GetRandomSpawnPoint(Transform[] Spawners)
