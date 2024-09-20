@@ -19,10 +19,59 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] SpriteRenderer spriteRenderer;
 
+    [Header("State")]
+    public bool isActive = false; // Checks if the player has anyone occupying
+    public bool idleDirection = false;
+
+    PlayerEnemySideDetection playerEnemySideDetection;
+
     void Update()
     {
-        MoveTowardsPlayer();
-        FlipCharacter();
+        checkPlayer();
+        if (isActive)
+        {
+            MoveTowardsPlayer();
+            FlipCharacter();
+        }
+        else
+        {
+            Idle();
+        }
+
+    }
+
+    private void checkPlayer()
+    {
+        if (playerEnemySideDetection.leftOccupied && playerEnemySideDetection.rightOccupied)
+        {
+            isActive = false;
+        }
+        else
+        {
+            isActive = true;
+        }
+    }
+    private void Idle()
+    {
+        Vector3 position = transform.position;
+        int randomDistance;
+        if (idleDirection == true)
+        {
+            randomDistance = Random.Range(3, 5);
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            randomDistance = Random.Range(-3, -5);
+            spriteRenderer.flipX = false;
+        }
+
+        Vector3 targetPosition = transform.position;
+        targetPosition.x += randomDistance;
+
+
+
+
     }
 
     private void FlipCharacter()

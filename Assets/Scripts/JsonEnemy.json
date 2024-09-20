@@ -1,0 +1,20 @@
+[
+  {
+    "ID": 1,
+    "enemyName": "Charger",
+    "enemyHealth": 10,
+    "enemyAttack": 6,
+    "enemySpeed": 2,
+    "enemyGold": 0,
+    "enemyExp": 0
+  },
+  {
+    "ID": 2,
+    "enemyName": "Pawn",
+    "enemyHealth": 5,
+    "enemyAttack": 3,
+    "enemySpeed": 4,
+    "enemyGold": 0,
+    "enemyExp": 0
+  }
+]
